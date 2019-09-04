@@ -1,0 +1,14 @@
+{
+  "name": "BoxScore",
+  "version": "1.0.0",
+  "description": "redis+mongodb+node+express",
+  "main": "server.js",
+  "author": "christopher73 <christopher.fajardo73@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.12",
+    "redis": "^2.8.0"
+  }
+}
