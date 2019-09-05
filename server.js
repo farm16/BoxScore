@@ -14,6 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // ex.  /api/v1/users/findall
+let allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  next();
+};
+app.use(allowCrossDomain);
 app.use(routes);
 
 app.use(express.static(path.join(__dirname, 'client/build')));

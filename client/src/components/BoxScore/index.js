@@ -1,7 +1,22 @@
-import React from 'react';
-import { R_OK } from 'constants';
+import React, { useEffect, useState } from 'react';
 
-function BoxScore() {
+function BoxScore(props) {
+  const [data, setData] = useState({});
+  async function fetchData() {
+    const res = await fetch('http://127.0.0.1:5037/api/v1/boxscore/mlb');
+    res
+      .json()
+      .then(res => {
+        console.log(res);
+        setData({ data: res.MLB });
+        console.log(data);
+      })
+      .catch(err => console.log(err));
+  }
+  useEffect(() => {
+    fetchData();
+  }, []); //componentsDidMount as hook with "[]" at the end... without it will constanly call fetch
+
   function periods(num) {
     let th = [];
     for (let i = 0; i < num; i++) {
