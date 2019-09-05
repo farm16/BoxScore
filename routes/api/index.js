@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const userRoutes = require('./boxScore');
 
-router.use('/boxScore', userRoutes);
+router.use('/boxscore', userRoutes);
 
 module.exports = router;
