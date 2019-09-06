@@ -22,7 +22,7 @@ module.exports = {
         console.log(`cache will expire in ${expireAt} seconds`);
       });
 
-      res.send({ NBA: data });
+      res.send(data);
     } catch (err) {
       console.error(err);
       res.status(500);
@@ -44,9 +44,9 @@ module.exports = {
       });
       client.expire('sports', expireAt, function(err) {
         if (err) console.log(err);
-        console.log(`cache will expire in ${expireAt / 1000} seconds`);
+        console.log(`cache will expire in ${expireAt} seconds`);
       });
-      res.send({ MLB: data });
+      res.send(data);
     } catch (err) {
       console.error(err);
       res.status(500);

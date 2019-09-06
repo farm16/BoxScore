@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
-const fetchData = require('./scripts/fetchData');
 const serverInfo = { port: 5037, serverName: 'BoxScore Server' };
 const routes = require('./routes');
 
@@ -19,7 +18,7 @@ let allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Headers', '*');
   next();
 };
-app.use(allowCrossDomain);
+app.use(allowCrossDomain); //allow all http calls - cors NOT HEALTHY !!!
 app.use(routes);
 
 app.use(express.static(path.join(__dirname, 'client/build')));

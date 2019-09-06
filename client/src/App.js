@@ -4,7 +4,7 @@ import BoxScore from './components/BoxScore';
 function App() {
   return (
     <>
-      <BoxScore></BoxScore>
+      <BoxScore />
     </>
   );
 }
