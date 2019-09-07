@@ -1,3 +1,5 @@
+## DEMO
+ - [Link here](https://node-redis-express.herokuapp.com/)
 ## Description:
  - This web applications uses Redis's cache system to reduce calls to the API from the server.
  - Redis's hash list was set with a 15 secs expiration time in order for the server to fetch new data.
