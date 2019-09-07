@@ -37,6 +37,7 @@ export const hooks = {
     };
 
     React.useEffect(() => {
+      fetchData();
       const interval = setInterval(() => {
         console.log('calling every 5 secs');
         fetchData();

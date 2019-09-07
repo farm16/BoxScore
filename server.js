@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
-const serverInfo = { port: 5037, serverName: 'BoxScore Server' };
+const serverInfo = { port: 3001, serverName: 'BoxScore Server' };
 const routes = require('./routes');
 
 const PORT = process.env.PORT || serverInfo.port;

@@ -3,170 +3,161 @@ import { hooks } from '../../utils';
 
 function BoxScore() {
   const { loading, teamInfo, totals, periods, hitters } = hooks.useFetch(
-    'http://127.0.0.1:5037/api/v1/boxscore/mlb'
+    '/api/v1/boxscore/mlb'
   );
-  function printPeriods(arr) {
-    const th = arr.map((number, i) => (
-      <th key={i} className="bg-light text-dark " scope="col">
-        {i + 1}
-      </th>
-    ));
+  function printPeriods(arr, team) {
+    const th = [];
+    th.push(<th scope="col"></th>);
+    th.push(
+      arr.map((number, i) => (
+        <th key={i + team} className="bg-light text-dark " scope="col">
+          {i + 1}
+        </th>
+      ))
+    );
     th.push(
       <>
-        <th key="r" scope="col">
-          R
-        </th>
-        <th key="h" scope="col">
-          H
-        </th>
-        <th key="e" style={{ borderTop: 'none' }} scope="col">
-          E
-        </th>
+        <th scope="col">R</th>
+        <th scope="col">H</th>
+        <th scope="col">E</th>
       </>
     );
     return th;
   }
-  function printScores(arr, obj) {
+  function printScores(arr, obj, team) {
     const td = arr.map((number, i) => (
-      <td key={i} className="bg-light text-dark ">
+      <td key={i + team} className="bg-light text-dark ">
         {number}
       </td>
     ));
     td.push(
       <>
-        <td key="r1">{obj.runs}</td>
-        <td key="h1">{obj.hits}</td>
-        <td key="e1">{obj.stolen_bases}</td>
+        <td>{obj.runs}</td>
+        <td>{obj.hits}</td>
+        <td>{obj.stolen_bases}</td>
       </>
     );
     return td;
   }
-  function printHitters(arr) {
+  function printHitters(arr, color) {
     const td = [];
     td.push(
-      <tr>
-        <th className="name">Hitters (Away)</th>
-        <th className="batting-stats-r">R</th>
-        <th className="batting-stats-h">H</th>
-        <th className="batting-stats-rbi">RBI</th>
-        <th className="batting-stats-k">K</th>
-        <th className="batting-stats-avg">AVG</th>
-        <th className="batting-stats-obp">OBP</th>
-        <th className="batting-stats-slg">SLG</th>
-      </tr>
+      <thead>
+        <tr>
+          <th style={{ backgroundColor: color }}> Hitters </th>
+          <th> H </th>
+          <th> AB </th>
+          <th> AVG </th>
+          <th> K/BB</th>
+          <th> SLG </th>
+          <th> S </th>
+          <th> OPS </th>
+          <th> HR </th>
+          <th> 2B </th>
+          <th> 3B </th>
+        </tr>
+      </thead>
     );
     td.push(
       arr.map((obj, i) => (
-        <tr>
-          <td key={i} className="name">
-            {obj.last_name}
-          </td>
-          <td key={i} className="batting-stats-h-ab">
-            {obj.position}
-          </td>
-          <td key={i} className="batting-stats-ab">
-            {obj.doubles}
-          </td>
-          <td key={i} className="batting-stats-r">
-            {obj.triples}
-          </td>
-          <td key={i} className="batting-stats-h">
-            {obj.hits}
-          </td>
-          <td key={i} className="batting-stats-rbi">
-            {obj.ops}
-          </td>
-          <td key={i} className="batting-stats-bb">
-            {obj.avg}
-          </td>
-          <td key={i} className="batting-stats-k">
-            {obj.walk_rate}
-          </td>
-          <td key={i} className="batting-stats-p">
-            {obj.walks}
-          </td>
-          <td key={i} className="batting-stats-avg">
-            {obj.slg}
-          </td>
-          <td key={i} className="batting-stats-obp">
-            {obj.singles}
-          </td>
-          <td key={i} className="batting-stats-slg">
-            {obj.home_runs}
-          </td>
-        </tr>
+        <tbody key={obj.last_name + i}>
+          <tr>
+            <th scope="row">
+              {obj.last_name}{' '}
+              <p
+                className="text-muted text-uppercase  p-0 m-0"
+                style={{ fontSize: '.6em' }}>
+                {obj.position}
+              </p>
+            </th>
+            <td>{obj.hits}</td>
+            <td>{obj.walks}</td>
+            <td>{obj.avg}</td>
+            <td>{obj.walk_rate}</td>
+            <td>{obj.slg}</td>
+            <td>{obj.singles}</td>
+            <td>{obj.ops}</td>
+            <td>{obj.home_runs}</td>
+            <td>{obj.doubles}</td>
+            <td>{obj.triples}</td>
+          </tr>
+        </tbody>
       ))
     );
     return td;
   }
   return (
     <div className="d-flex h-100">
-      <div className="row m-auto justify-content-center align-self-center text-center text-dark">
+      <div className="row m-auto justify-content-center align-self-center text-center text-dark w-100">
         {/* ========================CENTER======================== */}
         {loading ? (
           <div className="alert alert-warning" role="alert">
             Loading...
           </div>
         ) : (
-          <>
-            <h1></h1>
-            <div className="col-md-12 m-auto">
-              {' '}
-              <div className="container border text-white">
-                <div className="row">
-                  <table className="table py-0 my-0 table-dark">
-                    <thead>
-                      <tr>
-                        <th style={{ borderTop: 'none' }} scope="col">
-                          {' '}
-                        </th>
-                        {printPeriods(periods.away)}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">{teamInfo.home.abbreviation}</th>
-                        {printScores(periods.home, totals.home)}
-                      </tr>
-                      <tr>
-                        <th scope="row">{teamInfo.away.abbreviation}</th>
-                        {printScores(periods.away, totals.away)}
-                      </tr>
-                    </tbody>
-                  </table>
+          <div className="container">
+            <div className="row">
+              <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                <h1 className="display-4">Chris's Score Box</h1>
+                <p className="lead">
+                  Rendering from the{' '}
+                  <a href="https://chumley.barstoolsports.com/dev/data/games/eed38457-db28-4658-ae4f-4d4d38e9e212.json">
+                    barstoolsports.com
+                  </a>{' '}
+                  API
+                </p>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12 m-auto">
+                <table className="table-dark text-left border m-auto w-100 text-center ">
+                  <thead>{printPeriods(periods.away, 'team')}</thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">{teamInfo.home.abbreviation}</th>
+                      {printScores(periods.home, totals.home, 'home')}
+                    </tr>
+                    <tr>
+                      <th scope="row">{teamInfo.away.abbreviation}</th>
+                      {printScores(periods.away, totals.away, 'away')}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12 mx-auto mb-4 ">
+                <div className="container border text-white">
+                  <div className="row">
+                    <div className="col-md-5 col-sm-12 bg-danger">
+                      <h2 className="p-2">{teamInfo.home.last_name}</h2>
+                    </div>
+                    <div className="col-md-2  bg-dark border-left border-right">
+                      <h2 className="p-2">vs</h2>
+                    </div>
+                    <div className="col-md-5 col-sm-12  bg-success">
+                      <h2 className="p-2">{teamInfo.away.last_name}</h2>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="col-md-12 mx-auto mb-4 ">
-              <div className="container border text-white">
-                <div className="row">
-                  {' '}
-                  <div className="col-md-5 bg-danger">
-                    {' '}
-                    <h2 className="p-4">{teamInfo.home.last_name}</h2>
-                  </div>
-                  <div className="col-md-2 bg-dark border-left border-right">
-                    {' '}
-                    <h2 className="p-4">vs</h2>
-                  </div>
-                  <div className="col-md-5  bg-success">
-                    {' '}
-                    <h2 className="p-4">{teamInfo.away.last_name}</h2>
-                  </div>
-                </div>
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-12">
+                <h1>HITTERS</h1>
+              </div>{' '}
+              <div className="col-md-6 col-sm-12 col-12">
+                <table className="table table-responsive table-dark text-left border">
+                  {printHitters(hitters.home, 'red')}
+                </table>
               </div>
-            </div>{' '}
-            <div className="col-md-6 mx-auto mt-0 pt-0">
-              <table className="table table-striped">
-                <thead>{printHitters(hitters.home)}</thead>
-              </table>
-            </div>{' '}
-            <div className="col-md-6 m-auto">
-              <table className="table table-striped">
-                <thead>{printHitters(hitters.away)}</thead>
-              </table>
-            </div>{' '}
-          </>
+              <div className="col-md-6 col-sm-12 col-12">
+                <table className="table table-responsive table-dark text-left border">
+                  {printHitters(hitters.away, 'green')}
+                </table>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>
