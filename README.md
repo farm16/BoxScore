@@ -1,3 +1,10 @@
+## Description:
+ - This web applications uses Redis's cache system to reduce calls to the API from the server.
+ - Redis's hash list was set with a 15 secs expiration time in order for the server to fetch new data.
+ - For the fronend, React was set to fetch data (scores, stats ,etc) every 3 seconds, this way the client will have a closer experience to "real time"
+ - EX: An application with NO CACHE = API(1hit/3secs)->SERVER<->CLIENT(requests data every 3secs)
+ - WITH CACHE = API(1hit/15secs)->SERVER(got cache? if true, send client data from cache else fetch new data from the API and set CACHE's life to 15secs )<->CLIENT(requests data every 3secs)
+
 #### CLI Queries
 
 Here is a short list of some basic data extraction commands:
