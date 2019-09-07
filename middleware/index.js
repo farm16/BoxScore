@@ -1,6 +1,7 @@
 // Cache middleware
-const redis = require('redis');
-const client = redis.createClient();
+const client = require('redis').createClient(
+  process.env.REDISCLOUD_URL || 6379
+);
 
 module.exports = function cache(req, res, next) {
   const sportType = req.url === '/nba' ? 'nba' : 'mlb';

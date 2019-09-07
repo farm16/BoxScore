@@ -1,5 +1,7 @@
 const fetch = require('node-fetch');
-const client = require('redis').createClient(process.env.REDIS_URL || 6379);
+const client = require('redis').createClient(
+  process.env.REDISCLOUD_URL || 6379
+);
 const expireAt = 15;
 module.exports = {
   getNba: async function getRepos(req, res, next) {
