@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
-const redis = require('redis');
-const client = redis.createClient();
+const client = require('redis').createClient(process.env.REDIS_URL || 6379);
 const expireAt = 15;
 module.exports = {
   getNba: async function getRepos(req, res, next) {

@@ -1,7 +1,8 @@
 const fetch = require('node-fetch');
-const redis = require('redis');
-const client = redis.createClient();
-const { promisify } = require('util');
+
+const client = require('redis').createClient(process.env.REDIS_URL || 6379);
+
+// const { promisify } = require('util');
 //const getAsync = promisify(client.get).bind(client);
 // await client.hgetall('sports', function(err, reply) {
 //   if (err) console.log(err);
