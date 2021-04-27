@@ -23,7 +23,7 @@
     "iorejson": "^0.1.1",
     "mongoose": "^5.6.12",
     "node-fetch": "^2.6.0",
-    "redis": "^2.8.0"
+    "redis": "^3.1.1"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",
